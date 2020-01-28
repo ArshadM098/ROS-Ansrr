@@ -1,6 +1,8 @@
 <launch>
   <param name="robot_description" command ="xacro $(find ansrr_common)/xacro/ansrr_v1.xacro"/>
-  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find ansrr_common)/world/world_conf1.world"/>
+  </include>
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
     args="-param robot_description -urdf -model ansrr"/>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
