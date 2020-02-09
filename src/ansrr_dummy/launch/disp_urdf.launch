@@ -5,8 +5,5 @@
   </include>
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
     args="-param robot_description -urdf -model ansrr"/>
-  <node name="convert_scan" pkg="ansrr_dummy" type="convert_scan.py"/>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  <node name="rviz" pkg="rviz" type="rviz"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find ansrr_dummy)/maps/map.yaml"/>
 </launch>

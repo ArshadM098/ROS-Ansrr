@@ -1,0 +1,110 @@
+<xacro:include filename="macs.xacro" />
+<robot name="ansrrbot">
+  <link name="base_link">
+    <visual>
+      <xacro:geo_box />
+      <material name="silver">
+        <color rgba="0.75 0.75 0.75 1"/>
+      </material>
+    </visual>
+    <collision>
+      <xacro:geo_box />
+    </collision>
+    <xacro:inertia_macro mass="1" ixx= "${box_ixx}" iyy="${box_iyy}" izz="${box_izz}"/>
+  </link>
+
+  <xacro:wheel w_name="left_front" x="${front_x}" y="-${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="left_rear" x="${rear_x}" y="-${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="right_front" x="${front_x}" y="${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="right_rear" x="${rear_x}" y="${wheel_y}" z="${wheel_z}"/>
+
+  <link name="lidar">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <xacro:inertia_macro mass="0.05" ixx="0.01" iyy="0.01" izz="0.01"/>
+  </link>
+  <joint name="base_to_lidar" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="lidar"/>
+    <origin rpy="0 0 3.14" xyz="-.2286 0 0.1"/>
+  </joint>
+
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <leftJoint>[base_to_left_rear,base_to_left_front]</leftJoint>
+      <rightJoint>[base_to_right_rear,base_to_right_front]</rightJoint>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <wheelSeparation>0.4064</wheelSeparation>
+      <wheelDiameter>${wheel_radius*2}</wheelDiameter>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+
+  </gazebo>
+
+  <gazebo reference="lidar">
+    <sensor name="lds_lfcd_sensor" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>0</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>0</min_angle>
+            <max_angle>6.28</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>11</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="gazebo_ros_lds_lfcd_controller  " filename="libgazebo_ros_laser.so">
+        <topicName>/raw_scan</topicName>
+        <frameName>lidar</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <xacro:us_link link_name="us_link_1">
+    <origin rpy="0 .5 -2.356" xyz="-.21 -0.2 0.15"/>
+  </xacro:us_link>
+  <xacro:ultrasound_macro ref="us_link_1" sens_name="us1" plugin_name="gazebo_ros_us1"
+    topic_name="ultrasound_1" frame_name="us_link_1" />
+
+  <xacro:us_link link_name="us_link_2">
+    <origin rpy="0 .5 3.14" xyz="-.2286 -0.1 0.15"/>
+  </xacro:us_link>
+  <xacro:ultrasound_macro ref="us_link_2" sens_name="us2" plugin_name="gazebo_ros_us2"
+    topic_name="ultrasound_2" frame_name="us_link_2" />
+
+  <xacro:us_link link_name="us_link_3">
+    <origin rpy="0 0.5 3.14" xyz="-.2286 0 0.15"/>
+  </xacro:us_link>
+  <xacro:ultrasound_macro ref="us_link_3" sens_name="us3" plugin_name="gazebo_ros_us3"
+    topic_name="ultrasound_3" frame_name="us_link_3" />
+
+  <xacro:us_link link_name="us_link_4">
+    <origin rpy="0 0.5 3.14" xyz="-.2286 0.1 0.15"/>
+  </xacro:us_link>
+  <xacro:ultrasound_macro ref="us_link_4" sens_name="us4" plugin_name="gazebo_ros_us4"
+    topic_name="ultrasound_4" frame_name="us_link_4" />
+
+  <xacro:us_link link_name="us_link_5">
+    <origin rpy="0 0.5 2.356" xyz="-.21 0.2 0.15"/>
+  </xacro:us_link>
+  <xacro:ultrasound_macro ref="us_link_5" sens_name="us5" plugin_name="gazebo_ros_us5"
+    topic_name="ultrasound_5" frame_name="us_link_5" />
+
+</robot>
