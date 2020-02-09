@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 <xacro:property name="box_x" value="0.4572"/>
 <xacro:property name="box_y" value="0.4572"/>
 <xacro:property name="box_z" value="0.1524"/>
@@ -119,3 +121,4 @@
     <origin rpy="1.5708 0 0" xyz="${x} ${y} ${z}"/>
   </joint>
 </xacro:macro>
+</robot>
