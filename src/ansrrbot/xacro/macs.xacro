@@ -120,5 +120,12 @@
     <child link="${w_name}"/>
     <origin rpy="1.5708 0 0" xyz="${x} ${y} ${z}"/>
   </joint>
+  <transmission name="${w_name}_joint_trans" type="SimpleTransmission">
+      <actuator name="${w_name}_motor"/>
+      <joint name="$base_to_{w_name}"/>
+      <mechanicalReduction>1</mechanicalReduction>
+      <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission>
+
 </xacro:macro>
 </robot>

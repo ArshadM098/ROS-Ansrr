@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ansrr">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ansrr_bot">
   <xacro:include filename="$(cwd)/macs.xacro" />
   <link name="base_link">
     <visual>
@@ -41,8 +41,16 @@
 
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <leftJoint>[base_to_left_rear,base_to_left_front]</leftJoint>
-      <rightJoint>[base_to_right_rear,base_to_right_front]</rightJoint>
+      <leftJoint>base_to_left_rear</leftJoint>
+      <rightJoint>base_to_right_rear</rightJoint>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <wheelSeparation>0.4064</wheelSeparation>
+      <wheelDiameter>${wheel_radius*2}</wheelDiameter>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <leftJoint>base_to_left_front</leftJoint>
+      <rightJoint>base_to_right_front</rightJoint>
       <robotBaseFrame>base_link</robotBaseFrame>
       <wheelSeparation>0.4064</wheelSeparation>
       <wheelDiameter>${wheel_radius*2}</wheelDiameter>
@@ -72,7 +80,7 @@
         </range>
       </ray>
       <plugin name="gazebo_ros_lds_lfcd_controller  " filename="libgazebo_ros_laser.so">
-        <topicName>/raw_scan</topicName>
+        <topicName>/scan</topicName>
         <frameName>lidar</frameName>
       </plugin>
     </sensor>
