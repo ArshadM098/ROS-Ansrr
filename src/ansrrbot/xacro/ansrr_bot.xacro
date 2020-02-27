@@ -14,10 +14,10 @@
     <xacro:inertia_macro mass="1" ixx= "${box_ixx}" iyy="${box_iyy}" izz="${box_izz}"/>
   </link>
 
-  <xacro:wheel w_name="left_front" x="${front_x}" y="-${wheel_y}" z="${wheel_z}"/>
-  <xacro:wheel w_name="left_rear" x="${rear_x}" y="-${wheel_y}" z="${wheel_z}"/>
-  <xacro:wheel w_name="right_front" x="${front_x}" y="${wheel_y}" z="${wheel_z}"/>
-  <xacro:wheel w_name="right_rear" x="${rear_x}" y="${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="left_front" x="${front_x}" y="${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="left_rear" x="${rear_x}" y="${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="right_front" x="${front_x}" y="-${wheel_y}" z="${wheel_z}"/>
+  <xacro:wheel w_name="right_rear" x="${rear_x}" y="-${wheel_y}" z="${wheel_z}"/>
 
   <link name="lidar">
     <visual>
@@ -36,7 +36,7 @@
     <axis xyz="0 0 1"/>
     <parent link="base_link"/>
     <child link="lidar"/>
-    <origin rpy="0 0 3.14" xyz="-.2286 0 0.1"/>
+    <origin rpy="0 0 0" xyz="-.2286 0 0.1"/>
   </joint>
 
   <gazebo>

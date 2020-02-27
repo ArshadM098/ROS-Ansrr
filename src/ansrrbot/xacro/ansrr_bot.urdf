@@ -46,7 +46,7 @@
     <axis xyz="0 0 1"/>
     <parent link="base_link"/>
     <child link="left_front"/>
-    <origin rpy="1.5708 0 0" xyz="-0.1524 -0.25 -0.06096"/>
+    <origin rpy="1.5708 0 3.14" xyz="0.1524 0.25 -0.06096"/>
   </joint>
   <transmission name="left_front_joint_trans" type="SimpleTransmission">
     <actuator name="left_front_motor"/>
@@ -77,7 +77,7 @@
     <axis xyz="0 0 1"/>
     <parent link="base_link"/>
     <child link="left_rear"/>
-    <origin rpy="1.5708 0 0" xyz="0.1524 -0.25 -0.06096"/>
+    <origin rpy="1.5708 0 3.14" xyz="-0.1524 0.25 -0.06096"/>
   </joint>
   <transmission name="left_rear_joint_trans" type="SimpleTransmission">
     <actuator name="left_rear_motor"/>
@@ -108,7 +108,7 @@
     <axis xyz="0 0 1"/>
     <parent link="base_link"/>
     <child link="right_front"/>
-    <origin rpy="1.5708 0 0" xyz="-0.1524 0.25 -0.06096"/>
+    <origin rpy="1.5708 0 3.14" xyz="0.1524 -0.25 -0.06096"/>
   </joint>
   <transmission name="right_front_joint_trans" type="SimpleTransmission">
     <actuator name="right_front_motor"/>
@@ -139,7 +139,7 @@
     <axis xyz="0 0 1"/>
     <parent link="base_link"/>
     <child link="right_rear"/>
-    <origin rpy="1.5708 0 0" xyz="0.1524 0.25 -0.06096"/>
+    <origin rpy="1.5708 0 3.14" xyz="-0.1524 -0.25 -0.06096"/>
   </joint>
   <transmission name="right_rear_joint_trans" type="SimpleTransmission">
     <actuator name="right_rear_motor"/>
@@ -167,7 +167,7 @@
     <axis xyz="0 0 1"/>
     <parent link="base_link"/>
     <child link="lidar"/>
-    <origin rpy="0 0 3.14" xyz="-.2286 0 0.1"/>
+    <origin rpy="0 0 0" xyz="-.2286 0 0.1"/>
   </joint>
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
