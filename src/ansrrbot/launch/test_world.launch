@@ -1,13 +1,9 @@
 <launch>
-  <param name="/use_sim_time" value="false"/>
-  <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 1 map base_link 100" />
-  <param name="robot_description" textfile="$(find ansrrbot)/xacro/ansrr_bot.urdf"/>
-  <include file="$(find gazebo_ros)/launch/willowgarage_world.launch"/>
+  <param name="/use_sim_time" value="true"/>
+  <param name="robot_description" command="xacro $(find ansrrbot)/xacro/ansrr_v2.xacro"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
-    args="-param robot_description -urdf -model ansrr"/>
+    args="-param robot_description -urdf -model ansrr_bot"/>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  <node name="rviz" pkg="rviz" type="rviz"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find ansrrbot)/map2/map.yaml"/>
-  <include file="$(find amcl)/examples/amcl_diff.launch"/>
-
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ansrrbot)/config/test_viz.rviz"/>
 </launch>
