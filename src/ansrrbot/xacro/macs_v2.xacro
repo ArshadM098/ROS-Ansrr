@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ansrr_bot">
+  <xacro:property name="params_yaml" value="$(find ansrrbot)/xacro/ansrrbot_params.yaml"/>
+  <xacro:property name="params" value="${load_yaml(params_yaml)}"/>
+
+  <!-- Importing properties as values -->
+  <xacro:property name="wheel_common" value="${params['wheel_common']}" />
+  <xacro:property name="wheel_left" value="${params['wheel_left']}" />
+  <xacro:property name="wheel_right" value="${params['wheel_right']}" />
+  <xacro:property name="motor_common" value="${params['motor_common']}" />
+  <xacro:property name="motor_left" value="${params['motor_left']}" />
+  <xacro:property name="motor_right" value="${params['motor_right']}" />
+  <xacro:property name="base_link" value="${params['base_link']}" />
+
+
+  <!-- Materials -->
+  <material name="tire_black">
+    <color rgba="0.9 0.9 0.9 1"/>
+  </material>
+  <material name="aluminium_silver">
+    <color rgba="0.75 0.75 0.75 1"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+
+  <!-- File-Specific Macros-->
+  <xacro:macro name="MOTOR_MAC" params="motor_name">
+    <link name="${motor_name}">
+      <visual>
+        <geometry>
+          <cylinder length="${motor_common['thickness']}" radius="${motor_common['radius']}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${motor_common['thickness']}" radius="${motor_common['radius']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${motor_common['mass']}"/>
+        <inertia ixx="${motor_common['ixx']}" ixy="0" ixz="0" iyy="${motor_common['iyy']}"
+                iyz="0" izz="${motor_common['izz']}"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+  <xacro:macro name="WHEEL_MAC" params="wheel_name">
+    <link name="${wheel_name}">
+      <visual>
+        <geometry>
+          <cylinder length="${wheel_common['thickness']}" radius="${wheel_common['radius']}"/>
+        </geometry>
+        <material name="tire_black"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${wheel_common['thickness']}" radius="${wheel_common['radius']}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${wheel_common['mass']}"/>
+        <inertia ixx="${wheel_common['ixx']}" ixy="0" ixz="0" iyy="${wheel_common['iyy']}"
+                iyz="0" izz="${wheel_common['izz']}"/>
+      </inertial>
+    </link>
+
+  </xacro:macro>
+</robot>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ansrr_bot">
+  <xacro:include filename="$(find ansrrbot)/xacro/macs_v2.xacro" />
+  <!-- Links and Joints -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${base_link['x']} ${base_link['y']} ${base_link['z']}"/>
+      </geometry>
+      <material name="aluminium_silver"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${base_link['x']} ${base_link['y']} ${base_link['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${base_link['mass']}"/>
+      <inertia ixx="${base_link['ixx']}" ixy="0" ixz="0" iyy="${base_link['iyy']}" iyz="0" izz="${base_link['izz']}"/>
+    </inertial>
+  </link>
+  <xacro:MOTOR_MAC motor_name="motor_left"/>
+  <xacro:MOTOR_MAC motor_name="motor_right"/>
+  <joint name="base_to_motor_left" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="motor_left"/>
+    <origin rpy="${motor_left['rot_r']} ${motor_left['rot_p']} ${motor_left['rot_y']}"
+            xyz="${motor_left['pos_x']} ${motor_left['pos_y']} ${motor_left['pos_z']}"/>
+  </joint>
+  <joint name="base_to_motor_right" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="motor_right"/>
+    <origin rpy="${motor_right['rot_r']} ${motor_right['rot_p']} ${motor_right['rot_y']}"
+            xyz="${motor_right['pos_x']} ${motor_right['pos_y']} ${motor_right['pos_z']}"/>
+  </joint>
+  <xacro:WHEEL_MAC wheel_name="wheel_left"/>
+  <xacro:WHEEL_MAC wheel_name="wheel_right"/>
+  <joint name="base_to_wheel_left" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="motor_left"/>
+    <child link="wheel_left"/>
+    <origin rpy="${wheel_left['rot_r']} ${wheel_left['rot_p']} ${wheel_left['rot_y']}"
+            xyz="${wheel_left['pos_x']} ${wheel_left['pos_y']} ${wheel_left['pos_z']}"/>
+  </joint>
+  <joint name="base_to_wheel_right" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="motor_right"/>
+    <child link="wheel_right"/>
+    <origin rpy="${wheel_right['rot_r']} ${wheel_right['rot_p']} ${wheel_right['rot_y']}"
+            xyz="${wheel_right['pos_x']} ${wheel_right['pos_y']} ${wheel_right['pos_z']}"/>
+  </joint>
+  <gazebo>
+    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <leftJoint>base_to_wheel_left</leftJoint>
+      <rightJoint>base_to_wheel_right</rightJoint>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <wheelSeparation>${base_link['y']}</wheelSeparation>
+      <wheelDiameter>${wheel_common['radius'] * 2}</wheelDiameter>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+  </gazebo>
+</robot>
