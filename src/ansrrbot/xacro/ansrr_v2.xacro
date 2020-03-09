@@ -51,6 +51,30 @@
     <origin rpy="${wheel_right['rot_r']} ${wheel_right['rot_p']} ${wheel_right['rot_y']}"
             xyz="${wheel_right['pos_x']} ${wheel_right['pos_y']} ${wheel_right['pos_z']}"/>
   </joint>
+  <link name="elec_box">
+    <visual>
+      <geometry>
+        <box size="${elec_box['x']} ${elec_box['y']} ${elec_box['z']}"/>
+      </geometry>
+      <material name="aluminium_silver"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${elec_box['x']} ${elec_box['y']} ${elec_box['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${elec_box['mass']}"/>
+      <inertia ixx="${elec_box['ixx']}" ixy="0" ixz="0" iyy="${elec_box['iyy']}" iyz="0" izz="${elec_box['izz']}"/>
+    </inertial>
+  </link>
+  <joint name="base_to_elec_box" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="elec_box"/>
+    <origin rpy="${elec_box_ref['rot_r']} ${elec_box_ref['rot_p']} ${elec_box_ref['rot_y']}"
+            xyz="${elec_box_ref['pos_x']} ${elec_box_ref['pos_y']} ${elec_box_ref['pos_z']}"/>
+  </joint>
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
       <leftJoint>base_to_wheel_left</leftJoint>

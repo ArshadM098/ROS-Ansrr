@@ -11,7 +11,8 @@
   <xacro:property name="motor_left" value="${params['motor_left']}" />
   <xacro:property name="motor_right" value="${params['motor_right']}" />
   <xacro:property name="base_link" value="${params['base_link']}" />
-
+  <xacro:property name="elec_box" value="${params['elec_box']}" />
+  <xacro:property name="elec_box_ref" value="${params['elec_box_ref']}" />
 
   <!-- Materials -->
   <material name="tire_black">
