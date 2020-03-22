@@ -51,6 +51,7 @@
     <origin rpy="${wheel_right['rot_r']} ${wheel_right['rot_p']} ${wheel_right['rot_y']}"
             xyz="${wheel_right['pos_x']} ${wheel_right['pos_y']} ${wheel_right['pos_z']}"/>
   </joint>
+  <link name="elec_box">
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
       <leftJoint>base_to_wheel_left</leftJoint>
