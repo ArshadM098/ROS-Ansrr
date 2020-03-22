@@ -4,22 +4,14 @@
 
 # Wheel dimensions and mass
 wheel_common:
-  mass: 0.0508
-  radius: 0.0508
+  mass: 0.09071840
   thickness: 0.009525
-  ixx: 0.0514
-  iyy: 0.0514
-  izz: 0.1016
+  radius: 0.0381
+  ixx: 0.00003361
+  iyy: 0.00003361
+  izz: 0.00006584
 
 wheel_left:
-  pos_x: 0
-  pos_y: 0
-  pos_z: -0.0492125
-  rot_r: 0
-  rot_p: 0
-  rot_y: 0
-
-wheel_right:
   pos_x: 0
   pos_y: 0
   pos_z: 0.0492125
@@ -27,20 +19,28 @@ wheel_right:
   rot_p: 0
   rot_y: 0
 
+wheel_right:
+  pos_x: 0
+  pos_y: 0
+  pos_z: -0.0492125
+  rot_r: 0
+  rot_p: 0
+  rot_y: 0
+
 # Motor Dimensions and mass
 motor_common:
-  mass: 0.1016
-  radius: 0.0180
+  mass: 0.36287360
   thickness: 0.0889
-  ixx: 0.1165
-  iyy: 0.1165
-  izz: 0.0319
+  radius: 0.01799
+  ixx: 0.00026838
+  iyy: 0.00026838
+  izz: 0.00005879
 
 motor_left: # wrt to parent
   pos_x: 0
   pos_y: 0.09525
   pos_z: -0.02921
-  rot_r: 1.5708
+  rot_r: -1.5708
   rot_p: 0
   rot_y: 0
 
@@ -48,15 +48,32 @@ motor_right: # wrt to parent
   pos_x: 0
   pos_y: -0.09525
   pos_z: -0.02921
-  rot_r: 1.5708
+  rot_r: -1.5708
   rot_p: 0
   rot_y: 0
 
 base_link:
-  mass: 0.0508
+  mass: 0.22680
   x: 0.0254
   y: 0.2794
   z: 0.0254
-  ixx: 0.5165
-  iyy: 0.0085
-  izz: 0.5165
+  ixx: 0.00149
+  iyy: 0.00002
+  izz: 0.00149
+
+elec_box:
+  mass: 1.36078
+  x: 0.22860
+  y: 0.27940
+  z: 0.12700
+  ixx: 0.01068
+  iyy: 0.00775
+  izz: 0.01478
+
+elec_box_ref:
+    pos_x: 0.0762
+    pos_y: 0
+    pos_z: 0.0762
+    rot_r: 0
+    rot_p: 0
+    rot_y: 0
