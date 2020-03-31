@@ -52,8 +52,6 @@
             xyz="${wheel_right['pos_x']} ${wheel_right['pos_y']} ${wheel_right['pos_z']}"/>
   </joint>
   <link name="elec_box">
-<<<<<<< HEAD
-=======
     <visual>
       <geometry>
         <box size="${elec_box['x']} ${elec_box['y']} ${elec_box['z']}"/>
