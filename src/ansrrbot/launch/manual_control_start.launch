@@ -1,6 +1,4 @@
 <launch>
-  <node name="output_interface" pkg="ansrrbot" type="output_interface.py" launch-prefix="gnome-terminal --command"/>
-  <node name="input_interface" pkg="ansrrbot" type="input_interface.py" launch-prefix="gnome-terminal --command"/>
   <node name="state_machine" pkg="ansrrbot" type="state_machine.py" launch-prefix="gnome-terminal --command"/>
   <node name="mode_smach" pkg="ansrrbot" type="mode_smach.py" launch-prefix="gnome-terminal --command"/>
 </launch>

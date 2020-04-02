@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 
 rospy.init_node("output_interface")
 
@@ -24,7 +24,10 @@ def display_message(input):
             print("\t> "+"Mode: Manual")
         if(str == "5"):
             print("\t> "+"Mode: Autonomous")
-
+        if(str == "6"):
+            print("\t> "+"Initializing the robot")
+            pub = rospy.Publisher("init_flag", Bool, queue_size=10)
+            pub.publish(True)
 print("Reading Commands: ")
 sub = rospy.Subscriber("user_command", String, display_message)
 rospy.spin()
