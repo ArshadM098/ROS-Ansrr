@@ -2,5 +2,7 @@
   <node name="output_interface" pkg="ansrrbot" type="output_interface.py" launch-prefix="gnome-terminal --command"/>
   <node name="input_interface" pkg="ansrrbot" type="input_interface.py" launch-prefix="gnome-terminal --command"/>
   <node name="state_machine" pkg="ansrrbot" type="state_machine.py" launch-prefix="gnome-terminal --command"/>
-  <node name="mode_smach" pkg="ansrrbot" type="mode_smach.py" launch-prefix="gnome-terminal --command"/>
+  <node name="manual_input" pkg="ansrrbot" type="manual_input.py" launch-prefix="gnome-terminal --command"/>
+  <node name="keys_decoder" pkg="ansrrbot" type="keys_decoder.py"/>
+  <include file="$(find ansrrbot)/launch/test_world.launch"/>
 </launch>
