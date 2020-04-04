@@ -6,7 +6,7 @@ from std_msgs.msg import String
 rospy.init_node('input_interface')
 
 #Command Publisher
-pub = rospy.Publisher('user_command',String,queue_size=10)
+pub = rospy.Publisher('user_command',String,queue_size=1)
 valid_input = ("1","2","3","4","5","6")
 while(not rospy.is_shutdown()):
     usrInput = raw_input("> ")
