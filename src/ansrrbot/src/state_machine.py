@@ -5,20 +5,23 @@ from smach import State,StateMachine
 from time import sleep
 from ansrrbot.srv import manual_control
 from std_msgs.msg import Bool
+import smach_ros
 
 class MANUAL_OVERRIDE(State):
 
     def __init__(self):
         State.__init__(self, outcomes=['failed','success'])
         self.ACK = False
+        self.pub = rospy.Publisher("mode_control_SET", Bool, queue_size=1)
+        rospy.Subscriber("mode_control_ACK", Bool, self.ACK_TOGGLE)
+        self.rate = rospy.Rate(5)
     def execute(self, userData):
         print("System is executing 'MANUAL_OVERRIDE' procedures")
-        pub = rospy.Publisher("mode_control_SET", Bool, queue_size=10)
-        rospy.Subscriber("mode_control_ACK", Bool, self.ACK_TOGGLE)
-        rate = rospy.Rate(5)
+        # pub = rospy.Publisher("mode_control_SET", Bool, queue_size=10)
+        # rospy.Subscriber("mode_control_ACK", Bool, self.ACK_TOGGLE)
         while(self.ACK == False):
-            pub.publish(True)
-            rate.sleep()
+            self.pub.publish(True)
+            self.rate.sleep()
         return 'success'
     def ACK_TOGGLE(self,input):
         print("ACK received.")
@@ -68,11 +71,11 @@ class UPDATE_POINTS(State):
         print("System is executing 'UPDATE_POINTS' procedures")
         return 'success'
 
-def main(args):
-    if(args.data == True):
+def main(msg):
+    if(msg.data == True):
         print('Creating SMACH')
         sm = StateMachine(['complete','failed'])
-
+        sis = smach_ros.IntrospectionServer('smach_introspect',sm,'/SM_ROOT')
         with sm:
             StateMachine.add('MANUAL_OVERRIDE',MANUAL_OVERRIDE(),
             transitions={'success':'GET_HOME','failed':'failed'})
@@ -90,11 +93,10 @@ def main(args):
             transitions={'confirm':'complete','update':'UPDATE_POINTS','failed':'failed'})
             StateMachine.add('UPDATE_POINTS',UPDATE_POINTS(),
             transitions={'success':'MAKE_MAP','failed':'failed'})
-
+        sis.start()
         sm.execute()
 
 if __name__ == '__main__':
     rospy.init_node('robot_smach', anonymous=False)
-
     rospy.Subscriber("init_flag", Bool, main)
     rospy.spin()

@@ -5,9 +5,10 @@ from std_msgs.msg import String, Bool
 
 rospy.init_node("output_interface")
 
-def display_message(input):
+def display_message(input,args):
     #print(input.data)
     str = input.data
+    pub = args
     if(str == "Error"):
         print("Incorrect Command. Check Input and Retry")
     else:
@@ -20,14 +21,12 @@ def display_message(input):
             print("\t> "+"Task has been Stopped, Going home now!")
         if(str == "4"):
             print("\t> "+"Initiating Cleaning Procedure")
-        if(str == "4"):
-            print("\t> "+"Mode: Manual")
         if(str == "5"):
             print("\t> "+"Mode: Autonomous")
         if(str == "6"):
             print("\t> "+"Initializing the robot")
-            pub = rospy.Publisher("init_flag", Bool, queue_size=10)
             pub.publish(True)
 print("Reading Commands: ")
-sub = rospy.Subscriber("user_command", String, display_message)
+pub_init = rospy.Publisher("init_flag", Bool, queue_size=1)
+rospy.Subscriber("user_command", String, display_message,pub_init)
 rospy.spin()
