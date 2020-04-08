@@ -1,0 +1,1 @@
+controller_joint_names: ['', 'jnt_snowblower_to_auger', 'jnt_motor_left_to_wheel_left', 'jnt_motor_right_to_wheel_right', ]
