@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot  name="ansrrbot">
+  <link    name="base_link">
+    <inertial>
+      <origin        xyz="0.0631668806709494 0.0684635695799165 0.403760334290654"        rpy="0 0 0" />
+      <mass        value="0.0782705022132233" />
+      <inertia        ixx="0.000201129779998313"        ixy="1.68332469736753E-06"        ixz="-0.000244472082866983"        iyy="0.000514319036241318"        iyz="1.31408024765595E-06"        izz="0.000323476555824021" />
+    </inertial>
+    <visual>
+      <origin        xyz="0 0 0"        rpy="0 0 0" />
+      <geometry>
+        <mesh          filename="package://ansrrbot/meshes/base_link.STL" />
+      </geometry>
+      <material        name="">
+        <color          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin        xyz="0 0 0"        rpy="0 0 0" />
+      <geometry>
+        <mesh          filename="package://ansrrbot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!--joint    name="jnt_base_link_to_mot_mount_right"    type="fixed">
+  <origin      xyz="0.10939 -0.43967 0.029489"      rpy="-1.5673 0.0042368 -0.6628" />
+  <parent      link="base_link" />
+  <child      link="mot_mount_right" />
+  <axis      xyz="0 0 0" />
+</joint-->
+<link    name="base_frame">
+  <inertial>
+    <origin        xyz="-0.294123967568871 -0.0487200555106535 0.0009443540351316"        rpy="0 0 0" />
+    <mass        value="9.54529718987516" />
+    <inertia        ixx="0.152588823283287"        ixy="0.0125906158623084"        ixz="7.79619424573497E-14"        iyy="0.14743720419365"        iyz="7.76854437983115E-14"        izz="0.0567955459383545" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/base_frame.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/base_frame.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_link_to_base_frame"    type="fixed">
+  <origin      xyz="0.031772414541103 -0.444152171193881 0.0936920566909557"      rpy="-1.57503315487418 0.0035139056725671 -2.23361347543368" />
+  <parent      link="base_link" />
+  <child      link="base_frame" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="lidar">
+  <inertial>
+    <!--origin        xyz="-5.5511E-17 0.019358 0"        rpy="0 0 0" /-->
+    <mass        value="0.1709" />
+    <inertia        ixx="8.1302E-05"        ixy="-4.3649E-20"        ixz="-1.6941E-21"        iyy="0.00012232"        iyz="-4.8016E-20"        izz="8.1302E-05" />
+  </inertial>
+  <visual>
+    <geometry>
+      <!--mesh          filename="package://ansrrbot/meshes/lidar.STL" /-->
+      <cylinder radius="0.0254" length="0.0254"/>
+    </geometry>
+    <material        name="">
+      <color          rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <geometry>
+      <!--mesh          filename="package://ansrrbot/meshes/lidar.STL" /-->
+      <cylinder radius="0.0254" length="0.0254"/>
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_frame_to_lidar"    type="fixed">
+  <origin      xyz="-0.178 -0.155 0.000199999999999367"      rpy="1.57079632679 0 0" />
+  <parent      link="base_frame" />
+  <child      link="lidar" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="estop">
+  <inertial>
+    <origin        xyz="1.4897E-10 0.008752 -2.7756E-16"        rpy="0 0 0" />
+    <mass        value="0.0078623" />
+    <inertia        ixx="5.1833E-07"        ixy="1.9009E-15"        ixz="5.6591E-26"        iyy="6.3E-07"        iyz="-2.7036E-21"        izz="5.1833E-07" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/estop.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/estop.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_link_to_estop"    type="fixed">
+  <origin      xyz="-0.000200000000000256 -0.142491871523105 0.000199999999999756"      rpy="0 -0.907989787719994 -3.14159262592722" />
+  <parent      link="base_frame" />
+  <child      link="estop" />
+  <axis      xyz="0 1 0" />
+</joint>
+<link    name="skis">
+  <inertial>
+    <origin        xyz="0.0092221 0.12714 -0.033038"        rpy="0 0 0" />
+    <mass        value="0.19477" />
+    <inertia        ixx="6.79E-05"        ixy="6.642E-08"        ixz="5.2336E-06"        iyy="0.00013752"        iyz="-6.654E-08"        izz="0.00011401" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/skis.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.75294 0.75294 0.75294 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/skis.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_frame_to_skis"    type="fixed">
+  <origin      xyz="-0.1776 0.0574674999999998 0.127"      rpy="-1.5707963267949 0 -3.14159265358979" />
+  <parent      link="base_frame" />
+  <child      link="skis" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="us_bar">
+  <inertial>
+    <origin        xyz="0.1778 0.0675 -0.080061"        rpy="0 0 0" />
+    <mass        value="0.47836" />
+    <inertia        ixx="0.00014046"        ixy="3.7446E-09"        ixz="2.3211E-09"        iyy="0.005226"        iyz="-1.3578E-05"        izz="0.0052676" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us_bar.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us_bar.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_frame_to_us_bar"    type="fixed">
+  <origin      xyz="-0.40628988793664 0.0263286532747149 -0.176720500000002"      rpy="2.9654670748 -1.5707963267949 0" />
+  <parent      link="base_frame" />
+  <child      link="us_bar" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="us1">
+  <inertial>
+    <origin        xyz="-6.1589E-10 0.0047447 -2.6865E-05"        rpy="0 0 0" />
+    <mass        value="0.0047406" />
+    <inertia        ixx="1.3435E-07"        ixy="1.3975E-15"        ixz="-2.5036E-09"        iyy="3.3647E-07"        iyz="2.7754E-14"        izz="2.6187E-07" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us1.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.2 0.2 0.2 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us1.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_us_bar_us1"    type="fixed">
+  <origin      xyz="0.330286147286865 0.0625769223863527 -0.0873824433775312"      rpy="-1.5707963267949 0.130899693899576 3.14159265358979" />
+  <parent      link="us_bar" />
+  <child      link="us1" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="us2">
+  <inertial>
+    <origin        xyz="-6.15935302761272E-10 0.00474468175729792 -2.68650444928131E-05"        rpy="0 0 0" />
+    <mass        value="0.00474055679733208" />
+    <inertia        ixx="1.34347269178711E-07"        ixy="1.3976197352941E-15"        ixz="-2.5035814686469E-09"        iyy="3.36467550031301E-07"        iyz="2.77535796139216E-14"        izz="2.61873472444358E-07" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us2.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.2 0.2 0.2 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us2.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_us_bar_us2"    type="fixed">
+  <origin      xyz="0.254 0.0625769223863528 -0.0903941163303046"      rpy="-1.5707963267949 0 3.14159265358979" />
+  <parent      link="us_bar" />
+  <child      link="us2" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="us3">
+  <inertial>
+    <origin        xyz="-6.15935524805877E-10 0.00474468175729792 -2.68650444927021E-05"        rpy="0 0 0" />
+    <mass        value="0.00474055679733221" />
+    <inertia        ixx="1.34347269178717E-07"        ixy="1.39761992058256E-15"        ixz="-2.50358146864627E-09"        iyy="3.36467550031307E-07"        iyz="2.77535792780862E-14"        izz="2.61873472444358E-07" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us3.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.2 0.2 0.2 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us3.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_us_bar_us3"    type="fixed">
+  <origin      xyz="0.1778 0.0625769223863529 -0.0903941163303046"      rpy="-1.5707963267949 0 3.14159265358979" />
+  <parent      link="us_bar" />
+  <child      link="us3" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="us4">
+  <inertial>
+    <origin        xyz="-6.15935386027999E-10 0.00474468175729786 -2.68650444926744E-05"        rpy="0 0 0" />
+    <mass        value="0.0047405567973322" />
+    <inertia        ixx="1.34347269178716E-07"        ixy="1.39761993381745E-15"        ixz="-2.5035814686464E-09"        iyy="3.36467550031306E-07"        iyz="2.77535792995929E-14"        izz="2.61873472444358E-07" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us4.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.2 0.2 0.2 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us4.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_us_bar_us4"    type="fixed">
+  <origin      xyz="0.1016 0.0625769223863529 -0.0903941163303046"      rpy="-1.5707963267949 0 3.14159265358979" />
+  <parent      link="us_bar" />
+  <child      link="us4" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="us5">
+  <inertial>
+    <origin        xyz="-6.15898942957216E-10 0.004744681757191 -2.68650446914043E-05"        rpy="0 0 0" />
+    <mass        value="0.00474055679749078" />
+    <inertia        ixx="1.34347269178855E-07"        ixy="1.39754659929306E-15"        ixz="-2.50358146830835E-09"        iyy="3.36467550030024E-07"        iyz="2.77534433127546E-14"        izz="2.61873472442649E-07" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us5.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.2 0.2 0.2 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/us5.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_us_bar_us5"    type="fixed">
+  <origin      xyz="0.0253138527131348 0.062576922386353 -0.0873824433775311"      rpy="-1.5707963267949 -0.130899693899567 3.14159265358979" />
+  <parent      link="us_bar" />
+  <child      link="us5" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="mot_mount_left">
+  <inertial>
+    <origin        xyz="9.2797E-05 -0.012919 0.032051"        rpy="0 0 0" />
+    <mass        value="0.10538" />
+    <inertia        ixx="3.6874E-05"        ixy="1.9924E-07"        ixz="-1.2793E-11"        iyy="4.166E-05"        iyz="1.6101E-08"        izz="5.4808E-05" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/mot_mount_left.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/mot_mount_left.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_link_to_mot_mount_left"    type="fixed">
+  <origin      xyz="0.0168501866124379 -0.367432662183493 0.0299861778434074"      rpy="-1.56655949871561 -0.00351390567256711 0.907979178156117" />
+  <parent      link="base_link" />
+  <child      link="mot_mount_left" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="motor_left">
+  <inertial>
+    <origin        xyz="7.6716E-14 -1.59E-13 0.023203"        rpy="0 0 0" />
+    <mass        value="0.10845" />
+    <inertia        ixx="0.00011734"        ixy="2.3717E-20"        ixz="2.0329E-19"        iyy="0.00011734"        iyz="1.3934E-19"        izz="1.6909E-05" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/motor_left.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="1 0 0 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/motor_left.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_mot_mount_left_to_motor_left"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 -0.279121976980072" />
+  <parent      link="mot_mount_left" />
+  <child      link="motor_left" />
+  <axis      xyz="0 0 1" />
+</joint>
+<link    name="wheel_left">
+  <inertial>
+    <origin        xyz="-2.1781E-07 2.3964E-07 0.080485"        rpy="0 0 0" />
+    <mass        value="0.19631" />
+    <inertia        ixx="0.00013571"        ixy="4.4933E-09"        ixz="-2.4932E-12"        iyy="0.0001357"        iyz="3.2511E-12"        izz="0.00025137" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/wheel_left.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/wheel_left.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_motor_left_to_wheel_left"    type="continuous">
+  <origin      xyz="0 0 0.0220081655554961"      rpy="0 0 2.4215204031918" />
+  <parent      link="motor_left" />
+  <child      link="wheel_left" />
+  <axis      xyz="0 0 1" />
+</joint>
+<link    name="mot_mount_right">
+  <inertial>
+    <origin        xyz="9.2798E-05 -0.012919 0.032051"        rpy="0 0 0" />
+    <mass        value="0.10538" />
+    <inertia        ixx="3.6874E-05"        ixy="1.9924E-07"        ixz="-1.2989E-11"        iyy="4.166E-05"        iyz="1.6101E-08"        izz="5.4808E-05" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/mot_mount_right.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.79216 0.81961 0.93333 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/mot_mount_right.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_base_link_to_mot_mount_right"    type="fixed">
+  <origin      xyz="0.109392373610021 -0.439671545202831 0.0294887787860317"      rpy="-1.57503315487419 0.00351390567256582 -2.23361347543368" />
+  <parent      link="base_link" />
+  <child      link="mot_mount_right" />
+  <axis      xyz="0 0 0" />
+</joint>
+<link    name="motor_right">
+  <inertial>
+    <origin        xyz="0 7.7022E-16 0.023203"        rpy="0 0 0" />
+    <mass        value="0.10845" />
+    <inertia        ixx="0.00011734"        ixy="7.4115E-22"        ixz="1.1689E-19"        iyy="0.00011734"        iyz="6.861E-20"        izz="1.6909E-05" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/motor_right.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="1 0 0 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/motor_right.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_mot_mount_right_to_motor_right"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 -3.12636538691104" />
+  <parent      link="mot_mount_right" />
+  <child      link="motor_right" />
+  <axis      xyz="0 0 1" />
+</joint>
+<link    name="wheel_right">
+  <inertial>
+    <origin        xyz="2.534E-07 -2.016E-07 0.081883"        rpy="0 0 0" />
+    <mass        value="0.19631" />
+    <inertia        ixx="0.00013571"        ixy="5.5107E-09"        ixz="2.9965E-12"        iyy="0.00013571"        iyz="-2.7265E-12"        izz="0.00025137" />
+  </inertial>
+  <visual>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/wheel_right.STL" />
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <mesh          filename="package://ansrrbot/meshes/wheel_right.STL" />
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_motor_right_to_wheel_right"    type="continuous">
+  <origin      xyz="0 0 0.0227135395020008"      rpy="0 0 -0.734637759006842" />
+  <parent      link="motor_right" />
+  <child      link="wheel_right" />
+  <axis      xyz="0 0 -1" />
+</joint>
+<gazebo>
+  <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+    <leftJoint>jnt_motor_left_to_wheel_left</leftJoint>
+    <rightJoint>jnt_motor_right_to_wheel_right</rightJoint>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <wheelSeparation>0.3556</wheelSeparation>
+    <wheelDiameter>0.102</wheelDiameter>
+    <wheelTorque>50</wheelTorque>
+    <publishWheelJointState>true</publishWheelJointState>
+    <publishTf>1</publishTf>
+  </plugin>
+</gazebo>
+<gazebo reference="base_frame">
+  <mu1>.25</mu1>
+  <mu2>.25</mu2>
+</gazebo>
+<gazebo reference="skis">
+  <mu1>.25</mu1>
+  <mu2>.25</mu2>
+</gazebo>
+<gazebo reference="wheel_left">
+  <mu1>.9</mu1>
+  <mu2>.75</mu2>
+</gazebo>
+<gazebo reference="wheel_right">
+  <mu1>1</mu1>
+  <mu2>.8</mu2>
+</gazebo>\<gazebo reference="lidar">
+<sensor name="lidar_sensor" type="ray">
+  <pose>0 0 0 0 0 0</pose>
+  <visualize>0</visualize>
+  <update_rate>10</update_rate>
+  <ray>
+    <scan>
+      <horizontal>
+        <samples>8000</samples>
+        <resolution>1</resolution>
+        <min_angle>0</min_angle>
+        <max_angle>6.28</max_angle>
+      </horizontal>
+    </scan>
+    <range>
+      <min>0.15</min>
+      <max>12</max>
+      <resolution>.02</resolution>
+    </range>
+  </ray>
+  <plugin name="gazebo_ros_lds_lfcd_controller " filename="libgazebo_ros_laser.so">
+    <topicName>/scan</topicName>
+    <frameName>lidar</frameName>
+  </plugin>
+</sensor>
+</gazebo>
+<!-- Ultrasound Sensors-->
+<link name="dummy_us1">
+  <inertial>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <mass        value="0.001" />
+    <inertia        ixx="5.606E-06"        ixy="0"        ixz="0"        iyy="5.606E-06"        iyz="0"        izz="5.606E-06" />
+  </inertial>
+  <visual>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_dummy1"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 1.57" />
+  <parent      link="us1" />
+  <child      link="dummy_us1" />
+  <axis      xyz="0 0 0" />
+</joint>
+<gazebo reference="dummy_us1">
+  <sensor name="us_sensor1" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>1</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>0.85</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us1">
+      <gaussianNoise>0.001</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>obs_us1</topicName>
+      <frameName>dummy_us1</frameName>
+      <radiation>ULTRASOUND</radiation>
+      <fov>0.2967</fov>
+    </plugin>
+  </sensor>
+</gazebo>
+<link name="dummy_us2">
+  <inertial>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <mass        value="0.001" />
+    <inertia        ixx="5.606E-06"        ixy="0"        ixz="0"        iyy="5.606E-06"        iyz="0"        izz="5.606E-06" />
+  </inertial>
+  <visual>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_dummy2"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 1.57" />
+  <parent      link="us2" />
+  <child      link="dummy_us2" />
+  <axis      xyz="0 0 0" />
+</joint>
+<gazebo reference="dummy_us2">
+  <sensor name="us_sensor2" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>1</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>0.85</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us2">
+      <gaussianNoise>0.001</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>obs_us2</topicName>
+      <frameName>dummy_us2</frameName>
+      <radiation>ULTRASOUND</radiation>
+      <fov>0.2967</fov>
+    </plugin>
+  </sensor>
+</gazebo>
+<link name="dummy_us3">
+  <inertial>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <mass        value="0.001" />
+    <inertia        ixx="5.606E-06"        ixy="0"        ixz="0"        iyy="5.606E-06"        iyz="0"        izz="5.606E-06" />
+  </inertial>
+  <visual>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_dummy3"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 1.57" />
+  <parent      link="us3" />
+  <child      link="dummy_us3" />
+  <axis      xyz="0 0 0" />
+</joint>
+<gazebo reference="dummy_us3">
+  <sensor name="us_sensor3" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>1</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>0.85</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us3">
+      <gaussianNoise>0.001</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>obs_us3</topicName>
+      <frameName>dummy_us3</frameName>
+      <radiation>ULTRASOUND</radiation>
+      <fov>0.2967</fov>
+    </plugin>
+  </sensor>
+</gazebo>
+<link name="dummy_us4">
+  <inertial>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <mass        value="0.001" />
+    <inertia        ixx="5.606E-06"        ixy="0"        ixz="0"        iyy="5.606E-06"        iyz="0"        izz="5.606E-06" />
+  </inertial>
+  <visual>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_dummy4"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 1.57" />
+  <parent      link="us4" />
+  <child      link="dummy_us4" />
+  <axis      xyz="0 0 0" />
+</joint>
+<gazebo reference="dummy_us4">
+  <sensor name="us_sensor4" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>1</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>0.85</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us4">
+      <gaussianNoise>0.001</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>obs_us4</topicName>
+      <frameName>dummy_us4</frameName>
+      <radiation>ULTRASOUND</radiation>
+      <fov>0.2967</fov>
+    </plugin>
+  </sensor>
+</gazebo>
+
+<link name="dummy_us5">
+  <inertial>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <mass        value="0.001" />
+    <inertia        ixx="5.606E-06"        ixy="0"        ixz="0"        iyy="5.606E-06"        iyz="0"        izz="5.606E-06" />
+  </inertial>
+  <visual>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+    <material        name="">
+      <color          rgba="0.25098 0.25098 0.25098 1" />
+    </material>
+  </visual>
+  <collision>
+    <origin        xyz="0 0 0"        rpy="0 0 0" />
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+<joint    name="jnt_dummy5"    type="fixed">
+  <origin      xyz="0 0 0"      rpy="0 0 1.57" />
+  <parent      link="us5" />
+  <child      link="dummy_us5" />
+  <axis      xyz="0 0 0" />
+</joint>
+<gazebo reference="dummy_us5">
+  <sensor name="us_sensor5" type="ray">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>1</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>5</resolution>
+          <min_angle>-0.14835</min_angle>
+          <max_angle>0.14835</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>0.85</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us5">
+      <gaussianNoise>0.001</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>obs_us5</topicName>
+      <frameName>dummy_us5</frameName>
+      <radiation>ULTRASOUND</radiation>
+      <fov>0.2967</fov>
+    </plugin>
+  </sensor>
+</gazebo>
+</robot>
