@@ -3,6 +3,34 @@
 import rospy
 import serial
 
+class speed{
+    STOP = 127
+    MAX_REV = 0
+    MAX_FOR = 254
+}
+
+class m_ctrl{
+    MODE = 255
+    dev_num = 0
+    speed = 127
+
+    def __init__(self,dev_num):
+        self.dev_num = dev_num
+
+    def set_speed(self,speed):
+        self.speed = speed
+
+    def get_speed(self):
+        return self.speed
+
+    def send(self,serialport):
+        serialport.write(self.MODE,self.dev_num,self.speed)
+
+    def update_speed(self,serialport,speed)
+        self.set_speed(speed)
+        self.send(serialport)
+}
+
 try:
     import RPi.GPIO as IO
     rospy.loginfo("Imported RPi.GPIO")
@@ -18,8 +46,6 @@ ser = serial.Serial(port='/dev/ttyAMA0',
 
 mode = 255
 device_num = 13
-speed_stop = 127
-speed_run = 200
 tx_pin = 14
 rx_pin = 15
 try:
