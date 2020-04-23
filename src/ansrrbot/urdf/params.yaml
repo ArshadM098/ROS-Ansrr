@@ -1,0 +1,79 @@
+base_link:
+  x: 0.23
+  y: 0.28
+  z: 0.15
+  mass: 2.25
+  ixx: 0.01892
+  iyy: 0.014138
+  izz: 0.02462
+
+wheel:
+  r: 0.04
+  l: 0.019
+  mass: 0.05
+  ixx:  2.1504E-5
+  iyy:  2.1504E-5
+  izz:  0.0009492
+
+wheel_origin:
+  x: -0.05
+  z: -0.085
+  r: -1.570796
+
+ski:
+  r: 0.01
+  l: 0.015
+  mass: 0.01
+  ixx:  4.375E-7
+  iyy:  4.375E-7
+  izz:  1.1865e-5
+
+ski_origin:
+  x: 0.115
+  r: -1.570796
+
+snowblower:
+  r: 0.075
+  l: 0.38
+  mass: 2.25
+  ixx: 0.03024
+  iyy: 0.03024
+  izz: 0.15017
+
+snowblower_origin:
+  z_offset: 0.002
+  r: -1.570796
+
+lidar:
+  r: 0.015
+  l: 0.01
+  mass: 0.005
+  ixx: 3.229E-7
+  iyy: 3.229E-7
+  izz: 1.3348E-5
+
+lidar_origin:
+  x:  0.075
+  y:  0 #This is Yaw! not y coordinate
+
+sensorbar:
+  x: 0.05
+  y: .38
+  z: 0.05
+  mass: 0.01
+  ixx: 1.2242E-4
+  iyy: 4.167E-6
+  izz: 1.2242E-4
+
+sensorbar_origin:
+  tilt: 0.1745
+
+us:
+  x: 0.01
+  y: 0.04
+  z: 0.02
+  mass: 0.0001
+  ixx: 1.6667E-8
+  iyy: 4.167E-9
+  izz: 1.4167E-8
+  tilt: 0.13

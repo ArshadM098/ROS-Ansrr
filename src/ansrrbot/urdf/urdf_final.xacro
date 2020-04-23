@@ -1,0 +1,599 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ansrrbot">
+  <xacro:property name="params_yaml" value="$(find ansrrbot)/urdf/params.yaml"/>
+  <xacro:property name="params" value="${load_yaml(params_yaml)}"/>
+
+  <xacro:property name="base_link" value="${params['base_link']}" />
+  <xacro:property name="wheel" value="${params['wheel']}" />
+  <xacro:property name="ski" value="${params['ski']}" />
+  <xacro:property name="w_o" value="${params['wheel_origin']}" />
+  <xacro:property name="ski_o" value="${params['ski_origin']}" />
+  <xacro:property name="sb" value="${params['snowblower']}" />
+  <xacro:property name="ld" value="${params['lidar']}" />
+  <xacro:property name="ld_o" value="${params['lidar_origin']}" />
+  <xacro:property name="sb_o" value="${params['snowblower_origin']}" />
+  <xacro:property name="usbar" value="${params['sensorbar']}" />
+  <xacro:property name="usbar_o" value="${params['sensorbar_origin']}" />
+  <xacro:property name="us" value="${params['us']}" />
+
+
+
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${base_link['x']} ${base_link['y']} ${base_link['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${base_link['x']} ${base_link['y']} ${base_link['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${base_link['mass']}"/>
+      <inertia ixx="${base_link['ixx']}" iyy="${base_link['iyy']}" izz="${base_link['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <!-- Wheels +++++++++++++++++++++++++-->
+
+  <link name="w_left">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel['r']}" length="${wheel['l']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel['r']}" length="${wheel['l']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${wheel['mass']}"/>
+      <inertia ixx="${wheel['ixx']}" iyy="${wheel['iyy']}" izz="${wheel['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_base_wl" type="continuous">
+    <origin xyz="${w_o['x']} ${(base_link['y'] + wheel['l'])/2} ${w_o['z']}" rpy="${w_o['r']} 0 0" />
+    <parent link="base_link" />
+    <child link="w_left" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="w_right">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel['r']}" length="${wheel['l']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel['r']}" length="${wheel['l']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${wheel['mass']}"/>
+      <inertia ixx="${wheel['ixx']}" iyy="${wheel['iyy']}" izz="${wheel['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_base_wr" type="continuous">
+    <origin xyz="${w_o['x']} ${(base_link['y'] + wheel['l'])/-2} ${w_o['z']}" rpy="${w_o['r']} 0 0" />
+    <parent link="base_link" />
+    <child link="w_right" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <gazebo reference="w_left">
+    <mu1>.95</mu1>
+    <mu2>.95</mu2>
+  </gazebo>
+  <gazebo reference="w_right">
+    <mu1>.95</mu1>
+    <mu2>.95</mu2>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <leftJoint>jnt_base_wl</leftJoint>
+      <rightJoint>jnt_base_wr</rightJoint>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <wheelSeparation>${base_link['y']}</wheelSeparation>
+      <wheelDiameter>${wheel['r']*2}</wheelDiameter>
+      <wheelTorque>20</wheelTorque>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+  </gazebo>
+
+  <!-- Skis +++++++++++++++++++++++-->
+  <link name="ski_left">
+    <visual>
+      <geometry>
+        <cylinder radius="${ski['r']}" length="${ski['l']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${ski['r']}" length="${ski['l']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${ski['mass']}"/>
+      <inertia ixx="${ski['ixx']}" iyy="${ski['iyy']}" izz="${ski['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_base_skil" type="fixed">
+    <origin xyz="${ski_o['x']} ${(base_link['y'] - wheel['l'])/2} ${w_o['z'] - wheel['r'] + ski['r']}" rpy="${ski_o['r']} 0 0" />
+    <parent link="base_link" />
+    <child link="ski_left" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="ski_right">
+    <visual>
+      <geometry>
+        <cylinder radius="${ski['r']}" length="${ski['l']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${ski['r']}" length="${ski['l']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${ski['mass']}"/>
+      <inertia ixx="${ski['ixx']}" iyy="${ski['iyy']}" izz="${ski['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_base_skir" type="fixed">
+    <origin xyz="${ski_o['x']} ${(base_link['y'] - wheel['l'])/-2} ${w_o['z'] - wheel['r'] + ski['r']}" rpy="${ski_o['r']} 0 0" />
+    <parent link="base_link" />
+    <child link="ski_right" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <gazebo reference="ski_left">
+    <mu1>.05</mu1>
+    <mu2>.05</mu2>
+  </gazebo>
+
+  <gazebo reference="ski_right">
+    <mu1>.05</mu1>
+    <mu2>.05</mu2>
+  </gazebo>
+
+<!-- SnowBlower -->
+
+  <link name="snowblower">
+    <visual>
+      <geometry>
+        <cylinder radius="${sb['r']}" length="${sb['l']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${sb['r']}" length="${sb['l']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${sb['mass']}"/>
+      <inertia ixx="${sb['ixx']}" iyy="${sb['iyy']}" izz="${sb['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_base_sb" type="fixed">
+    <origin xyz="${(base_link['x']/2)+sb['r']} 0 ${w_o['z'] - wheel['r'] + sb['r'] + sb_o['z_offset']}" rpy="${sb_o['r']} 0 0" />
+    <parent link="base_link" />
+    <child link="snowblower" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <gazebo reference="snowblower">
+    <mu1>0</mu1>
+    <mu2>0</mu2>
+  </gazebo>
+
+  <!-- Lidar +++++++++++++++++++++++++++++++ -->
+
+  <link name="lidar">
+    <visual>
+      <geometry>
+        <cylinder radius="${ld['r']}" length="${ld['l']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${ld['r']}" length="${ld['l']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${ld['mass']}"/>
+      <inertia ixx="${ld['ixx']}" iyy="${ld['iyy']}" izz="${ld['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_base_ld" type="fixed">
+    <origin xyz="${ld_o['x']} 0 ${(base_link['z'] + ld['l'])/2}" rpy="0 0 ${ld_o['y']}" />
+    <parent link="base_link" />
+    <child link="lidar" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <gazebo reference="lidar">
+    <sensor name="lidar_sensor" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>0</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>1000</samples>
+            <resolution>1</resolution>
+            <min_angle>0</min_angle>
+            <max_angle>6.28</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.15</min>
+          <max>12</max>
+          <resolution>.02</resolution>
+        </range>
+      </ray>
+      <plugin name="gazebo_ros_lds_lfcd_controller " filename="libgazebo_ros_laser.so">
+        <topicName>/scan</topicName>
+        <frameName>lidar</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <link name="sensor_bar">
+    <visual>
+      <geometry>
+        <box size="${usbar['x']} ${usbar['y']} ${usbar['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${usbar['x']} ${usbar['y']} ${usbar['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${usbar['mass']}"/>
+      <inertia ixx="${usbar['ixx']}" iyy="${usbar['iyy']}" izz="${usbar['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_sb_sensebar" type="fixed">
+    <origin xyz="${sb['r']- 0.01} ${usbar['x']/-2} 0" rpy="${sb_o['r']} 0 ${usbar_o['tilt']}" />
+    <parent link= "snowblower" />
+    <child link= "sensor_bar" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="us1">
+    <visual>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${us['mass']}"/>
+      <inertia ixx="${us['ixx']}" iyy="${us['iyy']}" izz="${us['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_us1" type="fixed">
+    <origin xyz="${usbar['x']/2} ${(usbar['y']-us['y'])/2} 0" rpy="0 0 ${us['tilt']}" />
+    <parent link= "sensor_bar" />
+    <child link= "us1" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="us2">
+    <visual>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${us['mass']}"/>
+      <inertia ixx="${us['ixx']}" iyy="${us['iyy']}" izz="${us['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_us2" type="fixed">
+    <origin xyz="${usbar['x']/2} ${(usbar['y']-us['y'])/4} 0" rpy="0 0 0" />
+    <parent link= "sensor_bar" />
+    <child link= "us2" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="us3">
+    <visual>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${us['mass']}"/>
+      <inertia ixx="${us['ixx']}" iyy="${us['iyy']}" izz="${us['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_us3" type="fixed">
+    <origin xyz="${usbar['x']/2} 0 0" rpy="0 0 0" />
+    <parent link= "sensor_bar" />
+    <child link= "us3" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="us4">
+    <visual>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${us['mass']}"/>
+      <inertia ixx="${us['ixx']}" iyy="${us['iyy']}" izz="${us['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_us4" type="fixed">
+    <origin xyz="${usbar['x']/2} ${(usbar['y']-us['y'])/-4} 0" rpy="0 0 0" />
+    <parent link= "sensor_bar" />
+    <child link= "us4" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <link name="us5">
+    <visual>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${us['x']} ${us['y']} ${us['z']}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="${us['mass']}"/>
+      <inertia ixx="${us['ixx']}" iyy="${us['iyy']}" izz="${us['izz']}"
+        ixy="0" iyz="0" ixz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="jnt_us5" type="fixed">
+    <origin xyz="${usbar['x']/2} ${(usbar['y']-us['y'])/-2} 0" rpy="0 0 ${us['tilt']*-1}" />
+    <parent link= "sensor_bar" />
+    <child link= "us5" />
+    <axis  xyz="0 0 1" />
+  </joint>
+
+  <gazebo reference="us1">
+    <sensor name="ultrasound1" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>1</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.02</min>
+          <max>0.85</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us1">
+        <gaussianNoise>0.001</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>obs_us1</topicName>
+        <frameName>us1</frameName>
+        <radiation>ULTRASOUND</radiation>
+        <fov>0.2967</fov>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="us2">
+    <sensor name="ultrasound2" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>1</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.02</min>
+          <max>0.85</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us2">
+        <gaussianNoise>0.001</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>obs_us2</topicName>
+        <frameName>us2</frameName>
+        <radiation>ULTRASOUND</radiation>
+        <fov>0.2967</fov>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="us3">
+    <sensor name="ultrasound3" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>1</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.02</min>
+          <max>0.85</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us3">
+        <gaussianNoise>0.001</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>obs_us3</topicName>
+        <frameName>us3</frameName>
+        <radiation>ULTRASOUND</radiation>
+        <fov>0.2967</fov>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="us4">
+    <sensor name="ultrasound4" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>1</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.02</min>
+          <max>0.85</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us4">
+        <gaussianNoise>0.001</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>obs_us4</topicName>
+        <frameName>us4</frameName>
+        <radiation>ULTRASOUND</radiation>
+        <fov>0.2967</fov>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="us5">
+    <sensor name="ultrasound5" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>1</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>10</samples>
+            <resolution>5</resolution>
+            <min_angle>-0.14835</min_angle>
+            <max_angle>0.14835</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.02</min>
+          <max>0.85</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_us5">
+        <gaussianNoise>0.001</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50</updateRate>
+        <topicName>obs_us5</topicName>
+        <frameName>us5</frameName>
+        <radiation>ULTRASOUND</radiation>
+        <fov>0.2967</fov>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
