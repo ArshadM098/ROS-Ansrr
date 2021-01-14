@@ -3,3 +3,7 @@ local_costmap:
   robot_base_frame: base_link
   rolling_window: true
   static_map: false
+  resolution: 0.1
+  width: 5
+  height: 5
+  update_frequency: 10

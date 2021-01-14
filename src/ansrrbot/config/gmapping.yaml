@@ -1,0 +1,6 @@
+slam_gmapping:
+  # map_update_interval: 0.05
+  # linearUpdate: 0.01
+  # angularUpdate: 0.01
+  # temporalUpdate: 0.5
+  delta: 0.25

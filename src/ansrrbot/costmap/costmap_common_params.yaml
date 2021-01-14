@@ -1,7 +1,7 @@
-footprint: [[0.2350,0.2350],[0.2350,-0.2350],[-0.2350,-0.2350],[-0.2350,0.2350]]
+footprint: [[0.375,0.375],[0.375,-0.375],[-0.375,-0.375],[-0.375,0.375]]
 observation_sources : ls_sensor
 ls_sensor:
-  sensor_frame: laser_scan_sensor
+  sensor_frame: lidar
   data_type: LaserScan
   topic: /scan
   marking: true
@@ -9,6 +9,6 @@ ls_sensor:
 plugins:
     - {name: static_map,       type: "costmap_2d::StaticLayer"}
     - {name: obstacles,        type: "costmap_2d::ObstacleLayer"}
-publish_frequency: 10.0
+publish_frequency: 100
 obstacles:
     observation_sources: ls_sensor

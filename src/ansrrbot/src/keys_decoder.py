@@ -4,10 +4,12 @@ import rospy
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 
-move_key_map = {'w': [0,-1,1], # Forward
-                'a': [-1,0,1], # Left
-                's': [ 0,1,1], # Backward
-                'd': [1, 0,1], # Right
+x_speed = 0.5
+ang_speed = 0.5
+move_key_map = {'w': [0,x_speed,1], # Forward
+                'a': [ang_speed,0,1], # Left
+                's': [ 0,-x_speed,1], # Backward
+                'd': [-ang_speed, 0,1], # Right
                 'p': [0, 0,1], # Stop
                 'h': [0, 0,0], # Home
                 'i': [0, 1,0], # Insert Point

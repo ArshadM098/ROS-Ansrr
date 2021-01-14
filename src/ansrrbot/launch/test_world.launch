@@ -10,4 +10,7 @@
   <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"    args="-param robot_description -urdf -model ansrrbot"/>
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ansrrbot)/config/test_viz.rviz"/>
   <node name="key_input" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" launch-prefix="gnome-terminal --command"/>
+  <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find ansrrbot)/map/map.yaml"/>
+  <include file="$(find amcl)/examples/amcl_diff.launch"/>
+  <include file="$(find ansrrbot)/launch/move_base.launch"/> -->
 </launch>

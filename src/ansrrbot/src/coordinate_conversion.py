@@ -15,8 +15,6 @@ class Temp:
         diff_y = local_requested.y - global_frame.y
         return p((diff_x * cos_theta) + (diff_y * sin_theta),(diff_x * -sin_theta) + (diff_y * cos_theta))
 
-
-
     def p(x,y): # Creates Point using xy coordinate
         temp = Point()
         temp.x = x

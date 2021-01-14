@@ -2,12 +2,8 @@
 
 ## TODO: incomplete script.
 import rospy
+from gazebo_msgs/SpawnModel.srv import spawn_urdf_model
 
-rospy.init_node('us_reader')
-pub = rospy.Publisher('us_array',Int32)
-
-rate = rospy.Rate(2)
-while not rospy.is_shutdown():
-    pub.publish(count)
-    count += 1
-    rate.sleep()
+rospy.init_node('service_call')
+rospy.wait_for_service('')
+rospy.ServiceProxy("spawning", spawn_urdf_model)
